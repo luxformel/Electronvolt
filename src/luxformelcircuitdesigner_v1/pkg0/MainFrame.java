@@ -38,7 +38,7 @@ public class MainFrame extends javax.swing.JFrame {
         initComponents();
         loadJTree();
         loadComboBox();
-        System.out.println("Hello MainFrame!");
+        setTitle("Electronvolt");
         drawPanel.setComponents(components);
         componentsList.setListData(components.toArray());
     }
@@ -153,7 +153,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Luxformel Circuit Designer");
+        jLabel1.setText("Electronvolt");
 
         componentsList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -241,7 +241,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(509, 509, 509)
                         .addComponent(jLabel1)
-                        .addGap(0, 594, Short.MAX_VALUE)))
+                        .addGap(0, 763, Short.MAX_VALUE)))
                 .addGap(6, 6, 6))
         );
         layout.setVerticalGroup(
