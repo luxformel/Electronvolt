@@ -44,7 +44,6 @@ public class Resistor extends Component{
             // draws the lines to connect the components
             g2D.drawLine(position.x, position.y - 30, position.x, position.y - 50);    
             g2D.drawLine(position.x, position.y + 31, position.x, position.y + 50);
-        
     }
 
     @Override

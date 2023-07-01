@@ -4,12 +4,13 @@
  */
 package luxformelcircuitdesigner_v1.pkg0;
 
-
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -23,11 +24,18 @@ import javax.swing.tree.DefaultTreeModel;
  *
  * @author luxformel
  */
+
 public class MainFrame extends javax.swing.JFrame {
     
     private Components components = new Components();
+    private Wires wires = new Wires();
     private ImageGenerator imagegenerator;
     private Point position;
+    private Point connection1 = new Point();
+    private Point connection2 = new Point();
+    private int mousePressedCounter = 0;
+    private Stack redoStack = new Stack();
+    private Stack undoStack = new Stack();
     /**
      * Creates new form MainFrame
      */
@@ -40,10 +48,18 @@ public class MainFrame extends javax.swing.JFrame {
         loadComboBox();
         setTitle("Electronvolt");
         drawPanel.setComponents(components);
+        drawPanel.setWires(wires);
         componentsList.setListData(components.toArray());
+        
+        //Logo
+        ImageIcon icon = new ImageIcon("Icon.png");
+        setIconImage(icon.getImage()); //change icon of frame
+        //this.getContentPane().setBackground(new Color(0x123456)); //change color of background }
     }
     
     public void updateView(){
+        drawPanel.setComponents(components);
+        drawPanel.setWires(wires);
         componentsList.setListData(components.toArray());
         repaint();
     }
@@ -91,16 +107,7 @@ public class MainFrame extends javax.swing.JFrame {
         jTree.setModel(model);
     }
     
-    
-    
-    public void connectComponents(Point mousePosition1, Point mousePosition2){
-        if (components != null) {
-            
-        }
-    }
-    
-    
-   
+     
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -111,6 +118,9 @@ public class MainFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
+        jDialog1 = new javax.swing.JDialog();
+        jFrame1 = new javax.swing.JFrame();
+        jFrame2 = new javax.swing.JFrame();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTree = new javax.swing.JTree();
         drawPanel = new luxformelcircuitdesigner_v1.pkg0.DrawPanel();
@@ -125,8 +135,43 @@ public class MainFrame extends javax.swing.JFrame {
         jExportMenuItem = new javax.swing.JMenuItem();
         jDeleteAllMenuItem = new javax.swing.JMenuItem();
         jEditMenu = new javax.swing.JMenu();
+        jRedoMenuItem = new javax.swing.JMenuItem();
+        jUndoMenuItem = new javax.swing.JMenuItem();
         jHelpMenu = new javax.swing.JMenu();
         jHowToUseMenuItem = new javax.swing.JMenuItem();
+
+        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
+        jDialog1.getContentPane().setLayout(jDialog1Layout);
+        jDialog1Layout.setHorizontalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jDialog1Layout.setVerticalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
+        jFrame1.getContentPane().setLayout(jFrame1Layout);
+        jFrame1Layout.setHorizontalGroup(
+            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jFrame1Layout.setVerticalGroup(
+            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jFrame2Layout = new javax.swing.GroupLayout(jFrame2.getContentPane());
+        jFrame2.getContentPane().setLayout(jFrame2Layout);
+        jFrame2Layout.setHorizontalGroup(
+            jFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jFrame2Layout.setVerticalGroup(
+            jFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -144,7 +189,7 @@ public class MainFrame extends javax.swing.JFrame {
         drawPanel.setLayout(drawPanelLayout);
         drawPanelLayout.setHorizontalGroup(
             drawPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 1171, Short.MAX_VALUE)
         );
         drawPanelLayout.setVerticalGroup(
             drawPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -204,6 +249,23 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuBar.add(jFileMenu);
 
         jEditMenu.setText("Edit");
+
+        jRedoMenuItem.setText("Redo");
+        jRedoMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRedoMenuItemActionPerformed(evt);
+            }
+        });
+        jEditMenu.add(jRedoMenuItem);
+
+        jUndoMenuItem.setText("Undo");
+        jUndoMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jUndoMenuItemActionPerformed(evt);
+            }
+        });
+        jEditMenu.add(jUndoMenuItem);
+
         jMenuBar.add(jEditMenu);
 
         jHelpMenu.setText("Help");
@@ -225,9 +287,9 @@ public class MainFrame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(deleteSelectedComponentButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING)
@@ -237,12 +299,11 @@ public class MainFrame extends javax.swing.JFrame {
                                 .addComponent(jThemeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane2))
                         .addGap(24, 24, 24)
-                        .addComponent(drawPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(drawPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(6, 6, 6))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(509, 509, 509)
                         .addComponent(jLabel1)
-                        .addGap(0, 763, Short.MAX_VALUE)))
-                .addGap(6, 6, 6))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -291,15 +352,12 @@ public class MainFrame extends javax.swing.JFrame {
                 File newFile = new File(fileChooser.getCurrentDirectory(), fileName);
                 System.out.println("New file: " + newFile.getAbsolutePath());
                 
-                
                 String path = selectedFile.getAbsolutePath() + ".png";
             
                 imagegenerator = new ImageGenerator();
                 imagegenerator.exportAsPNG(drawPanel, path);
-            }
-            
+            }   
         }
-        
     }//GEN-LAST:event_jExportMenuItemActionPerformed
 
     private void jDeleteAllMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDeleteAllMenuItemActionPerformed
@@ -314,60 +372,63 @@ public class MainFrame extends javax.swing.JFrame {
         
         if (response == JOptionPane.YES_OPTION) {
             components.clear();
+            wires.clear();
+            redoStack.clear();
         }
         updateView();
     }//GEN-LAST:event_jDeleteAllMenuItemActionPerformed
 
     private void drawPanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drawPanelMousePressed
         // TODO add your handling code here:
-        int  X = evt.getX();
+        int X = evt.getX();
         int Y = evt.getY();
-        
-        int counter = 0;
-        
-        Point connection1 = null;
-        Point connection2 = null;
         
         if (evt.getButton() == MouseEvent.BUTTON1) {
             DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) jTree.getSelectionPath().getLastPathComponent();
             String selectedComponent = selectedNode.getUserObject().toString();
 
             position = new Point(X, Y);
+            Component component;
 
             // switch statement to check what was selected
             switch (selectedComponent) {
                 case "Widerstand":
-                    components.add(new Resistor(position));
+                    component = new Resistor(position);
                     break;
                 case "Spule":
-                    components.add(new Inductor(position));
+                    component = new Inductor(position);
                     break;
                 case "Kondensator":
-                    components.add(new Capacitor(position));
+                    component = new Capacitor(position);
                     break;
                 case "Diode":
-                    components.add(new Diode(position));
+                    component = new Diode(position);
                     break;
                 case "Transistor":
-                    components.add(new Transistor(position));
+                    component = new Transistor(position);
                     break;  
                 case "Glühlampe":
-                    components.add(new LightBulb(position));
+                    component = new LightBulb(position);
                     break;    
                 case "Batterie":
-                    components.add(new Battery(position));
+                    component = new Battery(position);
                     break;
                 default:
+                    component = new Component(position, "ERROR");
                     throw new AssertionError();
             }
-        }else if (counter == 1 && evt.getButton() == MouseEvent.BUTTON2) {
-            counter++;
-            connection1 = new Point(X, Y);
-        }else if(counter == 2 && evt.getButton() == MouseEvent.BUTTON2){
-            counter++;            
+            
+            components.add(component);
+            undoStack.push(new StackItem(component));
+           
+        }else if(mousePressedCounter == 1 && evt.getButton() == MouseEvent.BUTTON3){  
             connection2 = new Point(X, Y);
-        }else if(connection1 != null && connection2 != null && evt.getButton() == MouseEvent.BUTTON2){
-            counter = 0;
+            wires.add(new Wire(connection1, connection2));       
+            mousePressedCounter = 0;
+         
+        }else if (mousePressedCounter == 0 && evt.getButton() == MouseEvent.BUTTON3) {
+            mousePressedCounter++;
+            connection1 = new Point(X, Y);
         }
         updateView();
     }//GEN-LAST:event_drawPanelMousePressed
@@ -400,16 +461,54 @@ public class MainFrame extends javax.swing.JFrame {
     private void deleteSelectedComponentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteSelectedComponentButtonActionPerformed
         // TODO add your handling code here:
         int index = componentsList.getSelectedIndex();
+        index--;
+        System.out.println("selected index: " + index);
         if (index != -1) {
+            Component component = components.get(index);
+            StackItem deletedItem = new StackItem(component);
+            redoStack.push(deletedItem);
+            components.remove(component);
             Point position = components.get(index).getPosition();
             updateView();
         }
+        System.out.println("Stack nbr 0: " + redoStack.peek());
     }//GEN-LAST:event_deleteSelectedComponentButtonActionPerformed
 
     private void jHowToUseMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jHowToUseMenuItemActionPerformed
         // TODO add your handling code here:
-        
+       HelpFrame helpFrame = new HelpFrame();
+       helpFrame.show();
     }//GEN-LAST:event_jHowToUseMenuItemActionPerformed
+
+    private void jRedoMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRedoMenuItemActionPerformed
+        // TODO add your handling code here:
+        if (!redoStack.empty()) {
+            StackItem item = (StackItem) redoStack.pop();
+            if (item.getIsComponent()) {
+                Component component = item.getComponent();
+                components.add(component);
+            }else if (item.getIsWire()) {
+                Wire wire = item.getWire();
+                wires.add(wire);
+            }
+        }
+        updateView();
+    }//GEN-LAST:event_jRedoMenuItemActionPerformed
+
+    private void jUndoMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jUndoMenuItemActionPerformed
+        // TODO add your handling code here:
+        if (!undoStack.empty()) {
+            StackItem item = (StackItem) undoStack.pop();
+            if (item.getIsComponent()) {
+                Component component = item.getComponent();
+                components.add(component);
+            }else if (item.getIsWire()) {
+                Wire wire = item.getWire();
+                wires.add(wire);
+            }
+        }
+        updateView();
+    }//GEN-LAST:event_jUndoMenuItemActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -417,18 +516,23 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton deleteSelectedComponentButton;
     private luxformelcircuitdesigner_v1.pkg0.DrawPanel drawPanel;
     private javax.swing.JMenuItem jDeleteAllMenuItem;
+    private javax.swing.JDialog jDialog1;
     private javax.swing.JMenu jEditMenu;
     private javax.swing.JMenuItem jExportMenuItem;
     private javax.swing.JMenu jFileMenu;
+    private javax.swing.JFrame jFrame1;
+    private javax.swing.JFrame jFrame2;
     private javax.swing.JMenu jHelpMenu;
     private javax.swing.JMenuItem jHowToUseMenuItem;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar;
+    private javax.swing.JMenuItem jRedoMenuItem;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JComboBox<String> jThemeComboBox;
     private javax.swing.JTree jTree;
+    private javax.swing.JMenuItem jUndoMenuItem;
     // End of variables declaration//GEN-END:variables
 }

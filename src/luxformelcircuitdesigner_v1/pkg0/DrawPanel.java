@@ -16,6 +16,7 @@ public class DrawPanel extends javax.swing.JPanel {
 
     
     private Components components;
+    private Wires wires;
     
     /**
      * Creates new form DrawPanel
@@ -28,6 +29,11 @@ public class DrawPanel extends javax.swing.JPanel {
         this.components = components;
     }
 
+    public void setWires(Wires wires) {
+        this.wires = wires;
+    }
+    
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
@@ -36,6 +42,9 @@ public class DrawPanel extends javax.swing.JPanel {
         
         if(components != null){
             components.draw(g);
+        }
+        if (wires != null) {
+            wires.draw(g);
         }
     }
     
