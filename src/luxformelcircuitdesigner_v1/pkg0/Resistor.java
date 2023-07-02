@@ -16,16 +16,18 @@ import java.awt.Point;
  */
 public class Resistor extends Component{
     private Point position;
-    private Point[] connection = new Point[2];
-    
-    
     
     public Resistor(Point position){
         super(position, "Resistor");
         this.position = position;  
         
-        connection[0] = new Point(position.x, position.y - 50);
-        connection[1] = new Point(position.x, position.y + 50);
+        // creates the connector points
+        Point connection1 = new Point(position.x, position.y + 50);
+        Point connection2 = new Point(position.x, position.y - 50);
+        
+        // add the connector Points to the list
+        ConnectionPoints.add(connection1);
+        ConnectionPoints.add(connection2);
     }
     public Point getPosition() {
         return position;
