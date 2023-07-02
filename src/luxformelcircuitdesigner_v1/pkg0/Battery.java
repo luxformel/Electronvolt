@@ -20,6 +20,12 @@ public class Battery extends Component{
     public Battery(Point position){
         super(position, "Batterie");
         this.position = position;
+        
+        Point connection1 = new Point(position.x, position.y - 20);
+        Point connection2 = new Point(position.x, position.y + 20);
+        
+        ConnectionPoints.add(connection1);
+        ConnectionPoints.add(connection2);
     }
     
     @Override

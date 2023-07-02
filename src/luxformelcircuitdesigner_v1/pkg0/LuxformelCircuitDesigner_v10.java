@@ -15,7 +15,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class LuxformelCircuitDesigner_v10 {
     
-    
+    protected ConnectionPoints connectors = new ConnectionPoints();
     static String lookAndFeelName = "Nimbus";
     
     public void setLookAndFeelName(String lookAndFeelName){

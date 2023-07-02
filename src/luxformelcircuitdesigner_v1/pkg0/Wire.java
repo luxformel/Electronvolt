@@ -17,11 +17,12 @@ import java.awt.Point;
 public class Wire {
     private Point connectionPoint1;
     private Point connectionPoint2;
-
+    
     public Wire(Point connectionPoint1, Point connectionPoint2) {
-        this.connectionPoint1 = connectionPoint1;
-        this.connectionPoint2 = connectionPoint2;
+        this.connectionPoint1 = ConnectionPoints.findColsestPoint(connectionPoint1);
+        this.connectionPoint2 = ConnectionPoints.findColsestPoint(connectionPoint2);
     }
+    
     public void draw(Graphics g){
         Graphics2D g2D = (Graphics2D) g;
         g2D.setStroke(new BasicStroke(5));
@@ -58,16 +59,36 @@ public class Wire {
                     connectionPoint2.x, 
                     connectionPoint2.y
             );
-        }
-     
-    }
-    public void lineCoordinateAlgorithm(Point point1, Point point2){
-        
-        if (point1.x < point2.x && point1.y < point2.y) {
-            int xDisplacement = point2.x - point1.x;
-            
-            
-            int yDisplacement = point2.y - point1.y;
+        }else if (connectionPoint1.x > connectionPoint2.x && connectionPoint1.y < connectionPoint2.y) {
+            // Horizontal Line
+            g2D.drawLine(
+                    connectionPoint2.x, 
+                    connectionPoint1.y, 
+                    connectionPoint1.x, 
+                    connectionPoint1.y
+            );
+            // Vertical Line 
+            g2D.drawLine(
+                    connectionPoint2.x, 
+                    connectionPoint1.y, 
+                    connectionPoint2.x, 
+                    connectionPoint2.y
+            );
+        }else {
+            // Horizontal Line
+            g2D.drawLine(
+                    connectionPoint2.x, 
+                    connectionPoint1.y, 
+                    connectionPoint1.x, 
+                    connectionPoint1.y
+            );
+            // Vertical Line 
+            g2D.drawLine(
+                    connectionPoint2.x, 
+                    connectionPoint2.y, 
+                    connectionPoint2.x, 
+                    connectionPoint1.y
+            );
         }
     }
 }

@@ -21,6 +21,14 @@ public class LightBulb extends Component{
     public LightBulb(Point position){
         super(position, "Glühlampe");
          this.position = position;
+         
+         // creates the connector points
+        Point connection1 = new Point(position.x, position.y + 30);
+        Point connection2 = new Point(position.x, position.y - 30);
+        
+        // add the connector Points to the list
+        ConnectionPoints.add(connection1);
+        ConnectionPoints.add(connection2);
     }
 
     public Point getPosition() {

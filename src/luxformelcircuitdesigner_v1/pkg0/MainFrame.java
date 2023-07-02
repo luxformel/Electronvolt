@@ -374,6 +374,7 @@ public class MainFrame extends javax.swing.JFrame {
             components.clear();
             wires.clear();
             redoStack.clear();
+            ConnectionPoints.clear();
         }
         updateView();
     }//GEN-LAST:event_jDeleteAllMenuItemActionPerformed

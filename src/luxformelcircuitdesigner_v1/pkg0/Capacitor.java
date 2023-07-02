@@ -20,6 +20,14 @@ public class Capacitor extends Component{
     public Capacitor(Point position){
         super(position, "Spule");
          this.position = position;
+         
+         // creates the connector points
+        Point connection1 = new Point(position.x, position.y + 20);
+        Point connection2 = new Point(position.x, position.y - 20);
+        
+        // add the connector Points to the list
+        ConnectionPoints.add(connection1);
+        ConnectionPoints.add(connection2);
     }
     
     @Override
