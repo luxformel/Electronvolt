@@ -2,13 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package luxformelcircuitdesigner_v1.pkg0;
+package Components;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.RenderingHints;
+import luxformelcircuitdesigner_v1.pkg0.Component;
+import luxformelcircuitdesigner_v1.pkg0.ConnectionPoints;
 
 /**
  *
@@ -43,7 +46,9 @@ public class Inductor extends Component{
         Graphics2D g2D = (Graphics2D) g;
         g2D.setStroke(new BasicStroke(5));
         g2D.setColor(Color.BLACK);
-        // draws the body of the resistor
+        // Antialiasing
+        g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        // draws the body of the inductor
         //g.drawRect(position.x - 10, position.y - 30, 21, 61);
         g2D.drawArc(position.x - 10, position.y - 30, 20, 20, 90, 180);
         g2D.drawArc(position.x - 10, position.y - 10, 20, 20, 90, 180);
@@ -55,7 +60,7 @@ public class Inductor extends Component{
 
     @Override
     public String toString() {
-        return "Inductor{" + "position=" + position + '}';
+        return "Spule{" + "position=" + position + '}';
     }
 
     

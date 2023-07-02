@@ -2,13 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package luxformelcircuitdesigner_v1.pkg0;
+package Components;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import luxformelcircuitdesigner_v1.pkg0.Component;
+import luxformelcircuitdesigner_v1.pkg0.ConnectionPoints;
 
 /**
  *
@@ -43,6 +45,6 @@ public class Battery extends Component{
 
     @Override
     public String toString() {
-        return "Battery{" + "position=" + position + '}';
+        return "Batterie{" + "position=" + position + '}';
     }
 }

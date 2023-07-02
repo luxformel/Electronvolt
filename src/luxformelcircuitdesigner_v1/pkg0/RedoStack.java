@@ -13,8 +13,8 @@ import java.util.Stack;
 public class RedoStack {
     private Stack <StackItem> redoStack = new Stack<StackItem>();
     
-    public void push(StackItem deletedItem){
-        redoStack.push(deletedItem);
+    public void push(StackItem item){
+        redoStack.push(item);
     }
     public void pop(){
         redoStack.pop();
@@ -24,8 +24,7 @@ public class RedoStack {
         return redoStack;
     }
 
-    
-
+   
     public void clear(){
         redoStack.clear();
     }

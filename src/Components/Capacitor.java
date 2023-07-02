@@ -2,13 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package luxformelcircuitdesigner_v1.pkg0;
+package Components;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import luxformelcircuitdesigner_v1.pkg0.Component;
+import luxformelcircuitdesigner_v1.pkg0.ConnectionPoints;
 
 /**
  *
@@ -42,4 +44,10 @@ public class Capacitor extends Component{
         g2D.drawLine(position.x, position.y - 5, position.x, position.y - 20);
         g2D.drawLine(position.x, position.y + 5, position.x, position.y + 20);
     }
+
+    @Override
+    public String toString() {
+        return "Kondensator{" + "position=" + position + '}';
+    }
+    
 }

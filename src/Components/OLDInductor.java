@@ -2,23 +2,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package luxformelcircuitdesigner_v1.pkg0;
+package Components;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import luxformelcircuitdesigner_v1.pkg0.Component;
+import luxformelcircuitdesigner_v1.pkg0.ConnectionPoints;
 
 /**
  *
  * @author luxformel
  */
-public class Resistor extends Component{
+public class OLDInductor extends Component{
     private Point position;
     
-    public Resistor(Point position){
-        super(position, "Resistor");
+    public OLDInductor(Point position){
+        super(position, "Veraltete Spule");
         this.position = position;  
         
         // creates the connector points
@@ -42,7 +44,7 @@ public class Resistor extends Component{
             g2D.setStroke(new BasicStroke(5));
             g2D.setColor(Color.BLACK);
             // draws the body of the resistor
-            g2D.drawRect(position.x - 10, position.y - 30, 21, 61);
+            g2D.fillRect(position.x - 10, position.y - 30, 21, 61);
             // draws the lines to connect the components
             g2D.drawLine(position.x, position.y - 30, position.x, position.y - 50);    
             g2D.drawLine(position.x, position.y + 31, position.x, position.y + 50);
@@ -50,7 +52,6 @@ public class Resistor extends Component{
 
     @Override
     public String toString() {
-        return "Resistor{" + "position=" + position + '}';
+        return "Induktor{" + "position=" + position + '}';
     }
-    
 }

@@ -4,6 +4,19 @@
  */
 package luxformelcircuitdesigner_v1.pkg0;
 
+import Components.Transistor;
+import Components.Resistor;
+import Components.Inductor;
+import Components.LightBulb;
+import Components.Diode;
+import Components.Battery;
+import Components.Capacitor;
+import Components.OLDInductor;
+import Components.PowerSource;
+import Components.Switch;
+import Components.ToggleSwitch;
+import Components.Transformer;
+import Components.Connector;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -86,21 +99,31 @@ public class MainFrame extends javax.swing.JFrame {
         componentNode.add(new DefaultMutableTreeNode("Spule"));
         componentNode.add(new DefaultMutableTreeNode("Kondensator"));
         componentNode.add(new DefaultMutableTreeNode("Transistor"));
-        componentNode.add(new DefaultMutableTreeNode("Glühlampe"));
+        componentNode.add(new DefaultMutableTreeNode("Transformator"));
         
-        
+        DefaultMutableTreeNode lightNodes = new DefaultMutableTreeNode("Lichtquellen");
+        lightNodes.add(new DefaultMutableTreeNode("Glühlampe"));
+             
         DefaultMutableTreeNode switchesNode = new DefaultMutableTreeNode("Schalter");
         switchesNode.add(new DefaultMutableTreeNode("Schalter"));
         switchesNode.add(new DefaultMutableTreeNode("Umschalter"));
         
         DefaultMutableTreeNode powerSourceNode = new DefaultMutableTreeNode("Spannungsquellen");
         powerSourceNode.add(new DefaultMutableTreeNode("Batterie"));
-
+        powerSourceNode.add(new DefaultMutableTreeNode("Wechselspannungsquelle"));
+        
+        DefaultMutableTreeNode oldComponentNode = new DefaultMutableTreeNode("Veraltet Schreibweisen");
+        oldComponentNode.add(new DefaultMutableTreeNode("Inductor"));
+        
+        DefaultMutableTreeNode connectorNode = new DefaultMutableTreeNode("Anschlüsse");
+        connectorNode.add(new DefaultMutableTreeNode("Anschluss"));
         
         componentNode2.add(componentNode);
         componentNode2.add(switchesNode);
         componentNode2.add(powerSourceNode);
-        
+        componentNode2.add(oldComponentNode);
+        componentNode2.add(connectorNode);
+        componentNode2.add(lightNodes);
         
         model = (DefaultTreeModel)jTree.getModel();
         model.setRoot(componentNode2);
@@ -174,6 +197,7 @@ public class MainFrame extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
         jTree.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
@@ -299,11 +323,11 @@ public class MainFrame extends javax.swing.JFrame {
                                 .addComponent(jThemeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane2))
                         .addGap(24, 24, 24)
-                        .addComponent(drawPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(6, 6, 6))
+                        .addComponent(drawPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -315,15 +339,15 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(jThemeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(deleteSelectedComponentButton)
-                        .addGap(0, 21, Short.MAX_VALUE))
-                    .addComponent(drawPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(deleteSelectedComponentButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(140, 140, 140)
+                .addComponent(drawPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -341,7 +365,6 @@ public class MainFrame extends javax.swing.JFrame {
         
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         fileChooser.setDialogTitle("Save Your Circuit as .png");
-
         
         int response = fileChooser.showSaveDialog(null);
         if (response == JFileChooser.APPROVE_OPTION) {
@@ -376,6 +399,7 @@ public class MainFrame extends javax.swing.JFrame {
             redoStack.clear();
             ConnectionPoints.clear();
         }
+        mousePressedCounter = 0;
         updateView();
     }//GEN-LAST:event_jDeleteAllMenuItemActionPerformed
 
@@ -384,9 +408,11 @@ public class MainFrame extends javax.swing.JFrame {
         int X = evt.getX();
         int Y = evt.getY();
         
-        if (evt.getButton() == MouseEvent.BUTTON1) {
+        if (evt.getButton() == MouseEvent.BUTTON1 && !jTree.isSelectionEmpty()) {
+            
             DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) jTree.getSelectionPath().getLastPathComponent();
             String selectedComponent = selectedNode.getUserObject().toString();
+           
 
             position = new Point(X, Y);
             Component component;
@@ -414,8 +440,25 @@ public class MainFrame extends javax.swing.JFrame {
                 case "Batterie":
                     component = new Battery(position);
                     break;
+                case "Inductor":
+                    component = new OLDInductor(position);
+                    break;
+                case "Schalter":
+                    component = new Switch(position);
+                    break;
+                case "Umschalter":
+                    component = new ToggleSwitch(position);
+                    break;  
+                case "Transformator":
+                    component = new Transformer(position);
+                    break;
+                case "Wechselspannungsquelle":
+                    component = new PowerSource(position);
+                    break; 
+                case "Anschluss":
+                    component = new Connector(position);
+                    break;    
                 default:
-                    component = new Component(position, "ERROR");
                     throw new AssertionError();
             }
             
@@ -462,7 +505,6 @@ public class MainFrame extends javax.swing.JFrame {
     private void deleteSelectedComponentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteSelectedComponentButtonActionPerformed
         // TODO add your handling code here:
         int index = componentsList.getSelectedIndex();
-        index--;
         System.out.println("selected index: " + index);
         if (index != -1) {
             Component component = components.get(index);
@@ -488,9 +530,11 @@ public class MainFrame extends javax.swing.JFrame {
             if (item.getIsComponent()) {
                 Component component = item.getComponent();
                 components.add(component);
+                undoStack.push(component);
             }else if (item.getIsWire()) {
                 Wire wire = item.getWire();
                 wires.add(wire);
+                undoStack.push(wire);
             }
         }
         updateView();
@@ -500,17 +544,21 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (!undoStack.empty()) {
             StackItem item = (StackItem) undoStack.pop();
+            System.out.println("  Cast item  " + undoStack.pop());
             if (item.getIsComponent()) {
                 Component component = item.getComponent();
-                components.add(component);
+                components.remove(component);
+                redoStack.push(component);
             }else if (item.getIsWire()) {
                 Wire wire = item.getWire();
-                wires.add(wire);
+                wires.remove(wire);
+                redoStack.push(wire);
             }
         }
         updateView();
     }//GEN-LAST:event_jUndoMenuItemActionPerformed
-
+    int number = 69;
+    int newNumver = (int) number;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList componentsList;

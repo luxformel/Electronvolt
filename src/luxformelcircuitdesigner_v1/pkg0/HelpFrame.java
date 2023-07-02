@@ -63,7 +63,7 @@ public class HelpFrame extends javax.swing.JFrame {
         jTextArea2.setColumns(20);
         jTextArea2.setLineWrap(true);
         jTextArea2.setRows(5);
-        jTextArea2.setText("To connect your components just click on their connectors and Electronvolt will automatically connect them four you.");
+        jTextArea2.setText("To connect your components just click on their connectors and Electronvolt will automatically connect them for you.");
         jTextArea2.setWrapStyleWord(true);
         jScrollPane2.setViewportView(jTextArea2);
 
