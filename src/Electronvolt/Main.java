@@ -29,7 +29,7 @@ public class Main {
      */
     public static void main(String[] args) {
             for (UIManager.LookAndFeelInfo info:UIManager.getInstalledLookAndFeels()) {
-                    if ("Windows".equals(info.getName())) {
+                    if ("Windows".equals(info.getName()) || "Macintosh".equals(info.getName()) || "GTK+".equals(info.getName())) {
                         try {
                             UIManager.setLookAndFeel(info.getClassName());
                         } catch (ClassNotFoundException ex) {

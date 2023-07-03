@@ -12,6 +12,7 @@ import java.awt.Point;
 import java.awt.RenderingHints;
 import Lists.Component;
 import Lists.ConnectionPoints;
+import java.awt.geom.Path2D;
 
 /**
  *
@@ -55,15 +56,19 @@ public class Transistor extends Component{
         // left most connector line
         g2D.drawLine(position.x, position.y, position.x - 30, position.y);
         // diagonal lines
-        g2D.drawLine(position.x, position.y - 5, position.x + 30, position.y - 40);
-        g2D.drawLine(position.x, position.y + 5, position.x + 30, position.y + 40);
+        Path2D.Double diagonalLine = new Path2D.Double();
+        diagonalLine.moveTo(position.x + 30, position.y - 50);
+        diagonalLine.lineTo(position.x + 30, position.y - 40);
+        diagonalLine.lineTo(position.x, position.y - 5);
+        diagonalLine.lineTo(position.x, position.y + 5);
+        diagonalLine.lineTo(position.x + 30, position.y + 40);
+        diagonalLine.lineTo(position.x + 30, position.y + 50);
+        g2D.draw(diagonalLine);
         // triangle
         int[] xPoints = {position.x + 10, position.x + 20, position.x + 20};
         int[] yPoints = {position.y + 30, position.y + 20, position.y + 30};
         g2D.drawPolygon(xPoints, yPoints, 3);
-        // collector and emitter connector lines
-        g2D.drawLine(position.x + 30, position.y - 40, position.x + 30, position.y - 50);
-        g2D.drawLine(position.x + 30, position.y + 40, position.x + 30, position.y + 50);
+        
     }
 
     @Override

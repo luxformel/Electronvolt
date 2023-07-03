@@ -35,6 +35,7 @@ import Components.Voltmeter;
 import Components.Wattmeter;
 import Decorations.Dot;
 import Decorations.HighLightCircle;
+import Decorations.Text;
 import Lists.PointDecoration;
 import Lists.PointDecorations;
 import java.awt.Point;
@@ -80,6 +81,8 @@ public class MainFrame extends javax.swing.JFrame {
         initComponents();
         loadJTree();
         loadComboBox();
+        textTextField.setText("");
+        jtextSizeSpinner.setValue(20);
         setTitle("Electronvolt");
         jComponentRadioButton.setSelected(true);
         drawPanel.setComponents(components);
@@ -201,6 +204,9 @@ public class MainFrame extends javax.swing.JFrame {
         jDotConnectionRadioButton = new javax.swing.JRadioButton();
         jComponentRadioButton = new javax.swing.JRadioButton();
         highLightSelectedComponentButton = new javax.swing.JButton();
+        jTextRadioButton = new javax.swing.JRadioButton();
+        textTextField = new javax.swing.JTextField();
+        jtextSizeSpinner = new javax.swing.JSpinner();
         jMenuBar = new javax.swing.JMenuBar();
         jFileMenu = new javax.swing.JMenu();
         jExportMenuItem = new javax.swing.JMenuItem();
@@ -245,7 +251,6 @@ public class MainFrame extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
         jTree.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
@@ -277,16 +282,7 @@ public class MainFrame extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        componentsList.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                componentsListFocusGained(evt);
-            }
-        });
-        componentsList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                componentsListValueChanged(evt);
-            }
-        });
+        componentsList.setNextFocusableComponent(componentsList);
         jScrollPane3.setViewportView(componentsList);
 
         jThemeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Windows", " " }));
@@ -305,7 +301,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("Zeichnungsauswahl");
+        jLabel3.setText("Zeichnungsauswahl:");
 
         drawButtonGroup.add(jCurrentRadioButton);
         jCurrentRadioButton.setText("Strompfeil");
@@ -326,12 +322,12 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        drawButtonGroup.add(jTextRadioButton);
+        jTextRadioButton.setText("Text");
+
+        textTextField.setText("jTextField1");
+
         jFileMenu.setText("File");
-        jFileMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFileMenuActionPerformed(evt);
-            }
-        });
 
         jExportMenuItem.setText("Export");
         jExportMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -391,30 +387,33 @@ public class MainFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(deleteSelectedComponentButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane3)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jThemeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1)
-                            .addComponent(highLightSelectedComponentButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(24, 24, 24))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(deleteSelectedComponentButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jThemeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
+                    .addComponent(highLightSelectedComponentButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(drawPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jDotConnectionRadioButton)
+                            .addComponent(jComponentRadioButton)
                             .addComponent(jCurrentRadioButton)
                             .addComponent(jVoltageRadioButton)
-                            .addComponent(jDotConnectionRadioButton)
-                            .addComponent(jComponentRadioButton))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jTextRadioButton)
+                                .addGap(67, 67, 67)
+                                .addComponent(textTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jtextSizeSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -422,43 +421,45 @@ public class MainFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(81, 81, 81)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jThemeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(highLightSelectedComponentButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(deleteSelectedComponentButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jComponentRadioButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCurrentRadioButton)
-                .addGap(2, 2, 2)
-                .addComponent(jVoltageRadioButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jDotConnectionRadioButton)
-                .addGap(18, 18, 18)
-                .addComponent(drawPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(jComponentRadioButton))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jDotConnectionRadioButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jCurrentRadioButton)
+                        .addGap(3, 3, 3)
+                        .addComponent(jVoltageRadioButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextRadioButton)
+                            .addComponent(textTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtextSizeSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(25, 25, 25)
+                        .addComponent(drawPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(81, 81, 81)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jThemeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(highLightSelectedComponentButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(deleteSelectedComponentButton)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jFileMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileMenuActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jFileMenuActionPerformed
 
     private void jExportMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jExportMenuItemActionPerformed
         // TODO add your handling code here:
@@ -521,6 +522,13 @@ public class MainFrame extends javax.swing.JFrame {
         }
         if (jCurrentRadioButton.isSelected() && evt.getButton() == MouseEvent.BUTTON1) {
             
+        }
+        if (jTextRadioButton.isSelected() && evt.getButton() == MouseEvent.BUTTON1 && !textTextField.equals("")) {
+            Point position = evt.getPoint();
+            Text text = new Text(position, textTextField.getText(), (int) jtextSizeSpinner.getValue());
+            pointDecorationsList.add(text);
+            textTextField.setText("");
+            textTextField.requestFocus();
         }
         
         if (jComponentRadioButton.isSelected() && !jTree.isSelectionEmpty() && evt.getButton() == MouseEvent.BUTTON1) {
@@ -626,7 +634,6 @@ public class MainFrame extends javax.swing.JFrame {
     private void jThemeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jThemeComboBoxActionPerformed
         // TODO add your handling code here:
         String lookAndFeelName =  String.valueOf(jThemeComboBox.getSelectedItem());
-        System.out.println(lookAndFeelName);
             if (lookAndFeelName != null) {
                 for (UIManager.LookAndFeelInfo info:UIManager.getInstalledLookAndFeels()) {
                     if (lookAndFeelName.equals(info.getName())) {
@@ -651,15 +658,15 @@ public class MainFrame extends javax.swing.JFrame {
     private void deleteSelectedComponentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteSelectedComponentButtonActionPerformed
         // TODO add your handling code here:
         int index = componentsList.getSelectedIndex();
-        System.out.println("selected index: " + index);
-        if (index != -1) {
+        if (index != -1 && index < components.size()) {
             Component component = components.get(index);
-            StackItem deletedItem = new StackItem(component);
-            redoStack.push(deletedItem);
-            components.remove(component);
-            Point position = components.get(index).getPosition();
-            updateView();
+            redoStack.push(new StackItem(component));
+            components.remove(index);
+            //Point position = components.get(index).getPosition();
         }
+        // HLC = high light circle
+        drawPanel.setDrawHLC(false);
+        updateView();
     }//GEN-LAST:event_deleteSelectedComponentButtonActionPerformed
 
     private void jHowToUseMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jHowToUseMenuItemActionPerformed
@@ -710,25 +717,17 @@ public class MainFrame extends javax.swing.JFrame {
         updateView();
     }//GEN-LAST:event_jUndoMenuItemActionPerformed
 
-    private void componentsListFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_componentsListFocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_componentsListFocusGained
-
-    private void componentsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_componentsListValueChanged
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_componentsListValueChanged
-
     private void highLightSelectedComponentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_highLightSelectedComponentButtonActionPerformed
         // TODO add your handling code here:
-        int index = componentsList.getSelectedIndex() + 1;
+        int index = componentsList.getSelectedIndex();
         if (index != -1) {
             System.out.println("Index: " + index);
             Point point = components.get(index).getPosition();
-            HighLightCircle hightLightCircle = new HighLightCircle(point);
-            pointDecorationsList.add(hightLightCircle);
-            updateView();
+            HighLightCircle.setPosition(point);
+            drawPanel.setDrawHLC(true);     
         }
+        updateView();
+        componentsList.setSelectedIndex(index);
     }//GEN-LAST:event_highLightSelectedComponentButtonActionPerformed
 
 
@@ -758,9 +757,12 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JRadioButton jTextRadioButton;
     private javax.swing.JComboBox<String> jThemeComboBox;
     private javax.swing.JTree jTree;
     private javax.swing.JMenuItem jUndoMenuItem;
     private javax.swing.JRadioButton jVoltageRadioButton;
+    private javax.swing.JSpinner jtextSizeSpinner;
+    private javax.swing.JTextField textTextField;
     // End of variables declaration//GEN-END:variables
 }

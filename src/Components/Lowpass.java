@@ -46,7 +46,7 @@ public class Lowpass extends Component{
             g2D.setColor(Color.BLACK);
             // Antialiasing
             g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            // draws the body highpass
+            // draws the body lowpass
             g2D.drawRect(position.x - 40, position.y - 40, 80, 80);
             // draws the lines to connect the components
             g2D.drawLine(position.x, position.y - 40, position.x, position.y - 60);    

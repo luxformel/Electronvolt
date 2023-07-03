@@ -6,7 +6,6 @@ package Lists;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Point;
 import java.util.ArrayList;
 
 /**
@@ -20,6 +19,9 @@ public class Components {
     
     public void add(Component component){
         alComponents.add(component);
+    }
+    public void remove(int index){
+        alComponents.remove(index);
     }
     public void remove(Component component){
         alComponents.remove(component);

@@ -4,6 +4,7 @@
  */
 package Electronvolt;
 
+import Decorations.HighLightCircle;
 import Lists.Components;
 import Lists.PointDecorations;
 import Lists.Wires;
@@ -26,12 +27,17 @@ public class DrawPanel extends javax.swing.JPanel {
     private Components components;
     private Wires wires;
     private PointDecorations pointDecorationsList;
+    private boolean drawHLC = false;
     
     /**
      * Creates new form DrawPanel
      */
     public DrawPanel() {
         initComponents();
+    }
+
+    public void setDrawHLC(boolean drawHLC) {
+        this.drawHLC = drawHLC;
     }
     
     public void setComponents(Components components) {
@@ -60,6 +66,9 @@ public class DrawPanel extends javax.swing.JPanel {
         }
         if (pointDecorationsList != null) {
             pointDecorationsList.draw(g);
+        }
+        if (drawHLC) {
+            HighLightCircle.draw(g);
         }
     }
     

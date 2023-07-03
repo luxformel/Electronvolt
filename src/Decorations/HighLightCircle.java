@@ -17,15 +17,18 @@ import java.awt.RenderingHints;
  *
  * @author luxformel
  */
-public class HighLightCircle extends PointDecoration{
-    private Point position;
+public class HighLightCircle{
+    private static Point position;
     
     public HighLightCircle(Point position){
-       super(position);
        this.position = position;
     }
 
-    public void draw(Graphics g) {
+    public static void setPosition(Point position) {
+        HighLightCircle.position = position;
+    }
+
+    public static void draw(Graphics g) {
         Graphics2D g2D = (Graphics2D) g;
         g2D.setStroke(new BasicStroke(5));
         g2D.setColor(Color.MAGENTA);
