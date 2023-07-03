@@ -9,8 +9,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import luxformelcircuitdesigner_v1.pkg0.Component;
-import luxformelcircuitdesigner_v1.pkg0.ConnectionPoints;
+import Lists.Component;
+import Lists.ConnectionPoints;
 
 /**
  *

@@ -9,8 +9,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import luxformelcircuitdesigner_v1.pkg0.Component;
-import luxformelcircuitdesigner_v1.pkg0.ConnectionPoints;
+import Lists.Component;
+import Lists.ConnectionPoints;
 
 /**
  *
@@ -48,6 +48,16 @@ public class Capacitor extends Component{
     @Override
     public String toString() {
         return "Kondensator{" + "position=" + position + '}';
+    }
+
+    @Override
+    public Point getPosition() {
+        return position;
+    }
+
+    @Override
+    public void setPosition(Point position) {
+        this.position = position;
     }
     
 }

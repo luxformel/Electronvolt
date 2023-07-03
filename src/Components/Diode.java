@@ -10,15 +10,15 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
-import luxformelcircuitdesigner_v1.pkg0.Component;
-import luxformelcircuitdesigner_v1.pkg0.ConnectionPoints;
+import Lists.Component;
+import Lists.ConnectionPoints;
 
 /**
  *
  * @author luxformel
  */
 public class Diode extends Component{
-     private Point position;
+    private Point position;
     
     public Diode(Point position){
         super(position, "Diode");
@@ -51,14 +51,12 @@ public class Diode extends Component{
         // stopping line
         g2D.drawLine(position.x - 20, position.y - 20, position.x + 20, position.y - 20);
         //draws the triangle
-        // base
-        g2D.drawLine(position.x - 15, position.y + 20, position.x + 15, position.y + 20);
-        // sides
-        g2D.drawLine( position.x, position.y - 20, position.x + 20, position.y + 20);
-        g2D.drawLine(position.x - 20, position.y + 20, position.x, position.y - 20);        
+        int[] xPoints1 = {position.x - 15, position.x, position.x + 15};
+        int[] yPoints1 = {position.y + 20, position.y - 20, position.y + 20};
+        g2D.drawPolygon(xPoints1, yPoints1, 3);        
         // draws the lines to connect the components
-        g2D.drawLine(position.x, position.y - 20, position.x, position.y - 40);
-        g2D.drawLine(position.x, position.y + 20, position.x, position.y + 40);
+        g2D.drawLine(position.x, position.y - 40, position.x, position.y + 40);
+        //g2D.drawLine(position.x, position.y + 20, position.x, position.y + 40);
     }
 
     @Override
