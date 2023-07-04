@@ -55,4 +55,9 @@ public class Connector extends Component{
     public String toString() {
         return "Schalter{" + "position=" + position + '}';
     }
-}
+    @Override
+    public Point[] getConnectionPoints() {
+        Point[] points = new Point[1];
+        points[0] = new Point(position.x, position.y + 30);
+        return points;
+    }}

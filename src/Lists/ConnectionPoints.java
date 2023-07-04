@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class ConnectionPoints {
     private static ArrayList<Point> alPoints = new ArrayList<>();
 
-    public boolean isEmpty() {
+    public static boolean isEmpty() {
         return alPoints.isEmpty();
     }
 
@@ -28,6 +28,27 @@ public class ConnectionPoints {
 
     public static void clear() {
         alPoints.clear();
+    }
+    
+    public static void deletePoints(Point[] points){
+        System.out.println("the connection points are: " + points.toString());
+        if (!alPoints.isEmpty()) {
+            Point testPoint = new Point();
+            Point pointToRemove = new Point();
+            for (int i = alPoints.size() - 1; i >= 0; i--) {
+                System.out.println("all the connection points are: " + alPoints.get(i));
+                testPoint = alPoints.get(i);
+                for (int j = 0; j < points.length; j++) {
+                    System.out.println("the connection points we need to remove is: " + points[j]);
+                    pointToRemove = points[j];
+                    if (testPoint.equals(pointToRemove)) {
+                        alPoints.remove(testPoint);
+                        System.out.println("removed point at index: " + i);
+                        System.out.println("removed connection point : " + testPoint);
+                    }
+                }
+            }
+        }
     }
     
     public static Point findColsestPoint(Point point){
@@ -78,4 +99,9 @@ public class ConnectionPoints {
         }
         return new Point(100,100);
     }
+
+    public void remove(Point point) {
+        alPoints.remove(point);
+    }
+    
 }

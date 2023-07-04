@@ -59,5 +59,11 @@ public class Capacitor extends Component{
     public void setPosition(Point position) {
         this.position = position;
     }
-    
+    @Override
+    public Point[] getConnectionPoints() {
+        Point[] points = new Point[2];
+        points[0] = new Point(position.x, position.y + 20);
+        points[1] = new Point(position.x, position.y - 20);
+        return points;
+    }
 }

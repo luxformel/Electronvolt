@@ -7,14 +7,10 @@ package Electronvolt;
 import Decorations.HighLightCircle;
 import Lists.Components;
 import Lists.PointDecorations;
+import Lists.TwoPointDecorations;
 import Lists.Wires;
-import java.awt.AlphaComposite;
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.RenderingHints;
 
 
 /**
@@ -27,6 +23,7 @@ public class DrawPanel extends javax.swing.JPanel {
     private Components components;
     private Wires wires;
     private PointDecorations pointDecorationsList;
+    private TwoPointDecorations twoPointDecorationsList;
     private boolean drawHLC = false;
     
     /**
@@ -52,6 +49,11 @@ public class DrawPanel extends javax.swing.JPanel {
         this.pointDecorationsList = pointDecorationsList;
     }
 
+    public void setTwoPointDecorationsList(TwoPointDecorations twoPointDecorationsList) {
+        this.twoPointDecorationsList = twoPointDecorationsList;
+    }
+    
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
@@ -66,6 +68,9 @@ public class DrawPanel extends javax.swing.JPanel {
         }
         if (pointDecorationsList != null) {
             pointDecorationsList.draw(g);
+        }
+        if (twoPointDecorationsList != null) {
+            twoPointDecorationsList.draw(g);
         }
         if (drawHLC) {
             HighLightCircle.draw(g);

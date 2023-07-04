@@ -64,4 +64,11 @@ public class LightBulb extends Component{
         return "Glühlampe{" + "position=" + position + '}';
     }
     
+    @Override
+    public Point[] getConnectionPoints() {
+        Point[] points = new Point[2];
+        points[0] = new Point(position.x, position.y + 30);
+        points[1] = new Point(position.x, position.y - 30);
+        return points;
+    }
 }

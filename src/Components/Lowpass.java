@@ -65,4 +65,12 @@ public class Lowpass extends Component{
     public String toString() {
         return "Hochpass{" + "position=" + position + '}';
     }
+    
+    @Override
+    public Point[] getConnectionPoints() {
+        Point[] points = new Point[2];
+        points[0] = new Point(position.x, position.y + 60);
+        points[1] = new Point(position.x, position.y - 60);
+        return points;
+    }
 }

@@ -12,9 +12,11 @@ public class StackItem {
     private boolean isComponent = false;
     private boolean isWire = false;
     private boolean isPointDecoration = false;
+    private boolean isTwoPointDecoration = false;
     private Component component = null;
     private Wire wire = null;
     private PointDecoration pointDecoration = null;
+    private TwoPointDecoration twoPointDecoration = null;
 
     public StackItem(Component component) {
         this.isComponent = true;
@@ -29,6 +31,10 @@ public class StackItem {
      public StackItem(PointDecoration pointDecoration) {
         this.pointDecoration = pointDecoration;
         this.isPointDecoration = true;
+    }
+     public StackItem(TwoPointDecoration twoPointDecoration) {
+        this.twoPointDecoration = twoPointDecoration;
+        this.isTwoPointDecoration = true;
     }
 
     public boolean getIsComponent() {
@@ -73,4 +79,13 @@ public class StackItem {
     public void setIsPointDecoration() {
         this.isPointDecoration = true;
     }
+
+    public boolean getIsTwoPointDecoration() {
+        return isTwoPointDecoration;
+    }
+
+    public TwoPointDecoration getTwoPointDecoration() {
+        return twoPointDecoration;
+    }
+    
 }

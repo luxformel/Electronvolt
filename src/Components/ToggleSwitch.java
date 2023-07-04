@@ -50,6 +50,7 @@ public class ToggleSwitch extends Component{
         g2D.setColor(Color.BLACK);
         // Antialiasing
         g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        
         g2D.drawLine(position.x - 30, position.y, position.x, position.y);
         g2D.drawOval(position.x - 3, position.y - 3, 6, 6);
         g2D.drawLine(position.x, position.y, position.x + 20, position.y - 20);
@@ -64,5 +65,13 @@ public class ToggleSwitch extends Component{
     @Override
     public String toString() {
         return "Umschalter{" + "position=" + position + '}';
+    }
+    @Override
+    public Point[] getConnectionPoints() {
+        Point[] points = new Point[3];
+        points[0] = new Point(position.x - 30, position.y);
+        points[1] = new Point(position.x + 50, position.y + 20);
+        points[2] = new Point(position.x + 50, position.y - 20);
+        return points;
     }
 }

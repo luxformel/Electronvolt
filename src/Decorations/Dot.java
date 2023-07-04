@@ -4,6 +4,7 @@
  */
 package Decorations;
 
+import Lists.ConnectionPoints;
 import Lists.PointDecoration;
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -22,6 +23,7 @@ public class Dot extends PointDecoration{
     public Dot(Point position){
        super(position);
        this.position = position;
+        ConnectionPoints.add(position);
     }
 
     public void draw(Graphics g) {

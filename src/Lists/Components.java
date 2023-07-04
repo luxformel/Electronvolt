@@ -6,6 +6,7 @@ package Lists;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.util.ArrayList;
 
 /**
@@ -21,9 +22,14 @@ public class Components {
         alComponents.add(component);
     }
     public void remove(int index){
+        Component componentToRemove = alComponents.get(index);
+        Point[] points = componentToRemove.getConnectionPoints();
+        ConnectionPoints.deletePoints(points);
         alComponents.remove(index);
     }
     public void remove(Component component){
+        Point[] points = component.getConnectionPoints();
+        ConnectionPoints.deletePoints(points);
         alComponents.remove(component);
     }
     public void clear(){
@@ -39,6 +45,7 @@ public class Components {
         return alComponents.get(index);
     }
 
+   
     public Object[] toArray() {
         return alComponents.toArray();
     }

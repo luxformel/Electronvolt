@@ -75,6 +75,13 @@ public class Transistor extends Component{
     public String toString() {
         return "Transistor{" + "position=" + position + '}';
     }
-    
+    @Override
+    public Point[] getConnectionPoints() {
+        Point[] points = new Point[3];
+        points[0] = new Point(position.x - 30, position.y);
+        points[1] = new Point(position.x + 30, position.y - 50);
+        points[2] = new Point(position.x + 30, position.y + 50);
+        return points;
+    }
     
 }

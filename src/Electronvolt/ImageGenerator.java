@@ -27,7 +27,7 @@ public class ImageGenerator {
         // adds a buffer 
         width += 50;
         height += 50;
-        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage image = new BufferedImage(panel.getWidth(), panel.getHeight(), BufferedImage.TYPE_INT_ARGB);
 
         // Get the Graphics object of the BufferedImage
         Graphics g = image.getGraphics();

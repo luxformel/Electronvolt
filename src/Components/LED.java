@@ -90,5 +90,11 @@ public class LED extends Component{
         return "LED{" + "position=" + position + '}';
     }
 
-   
+   @Override
+    public Point[] getConnectionPoints() {
+        Point[] points = new Point[2];
+        points[0] = new Point(position.x, position.y + 40);
+        points[1] = new Point(position.x, position.y - 40);
+        return points;
+    }
 }

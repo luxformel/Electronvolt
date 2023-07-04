@@ -83,5 +83,13 @@ public class Transformer extends Component{
     public String toString() {
         return "Transformator{" + "position=" + position + '}';
     }
-
+    @Override
+    public Point[] getConnectionPoints() {
+        Point[] points = new Point[4];
+        points[0] = new Point(position.x - 55, position.y - 50);
+        points[1] = new Point(position.x - 55, position.y + 50);
+        points[2] = new Point(position.x + 55, position.y - 50);
+        points[3] = new Point(position.x + 55, position.y + 50);
+        return points;
+    }
 }

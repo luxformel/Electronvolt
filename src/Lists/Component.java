@@ -16,6 +16,8 @@ public abstract class Component {
     private String typeOfComponent;
 
     public abstract Point getPosition();
+    
+    public abstract Point[] getConnectionPoints();
 
     public abstract void setPosition(Point position);
     

@@ -74,4 +74,14 @@ public class Wattmeter extends Component{
     public String toString() {
         return "Wattmeter{" + "position=" + position + '}';
     }
+
+    @Override
+    public Point[] getConnectionPoints() {
+        Point[] points = new Point[4];
+        points[0] = new Point(position.x, position.y + 40);
+        points[1] = new Point(position.x, position.y - 40);
+        points[2] = new Point(position.x + 40, position.y);
+        points[3] = new Point(position.x - 40, position.y);
+        return points;
+    }
 }

@@ -69,4 +69,11 @@ public class Potentiometer extends Component{
     public String toString() {
         return "Potentiometer{" + "position=" + position + '}';
     }
+    @Override
+    public Point[] getConnectionPoints() {
+        Point[] points = new Point[2];
+        points[0] = new Point(position.x, position.y + 60);
+        points[1] = new Point(position.x, position.y - 50);
+        return points;
+    }
 }

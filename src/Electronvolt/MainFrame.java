@@ -33,11 +33,15 @@ import Components.LED;
 import Components.Potentiometer;
 import Components.Voltmeter;
 import Components.Wattmeter;
+import Decorations.CurrentArrow;
 import Decorations.Dot;
 import Decorations.HighLightCircle;
 import Decorations.Text;
+import Decorations.VoltageArrow;
 import Lists.PointDecoration;
 import Lists.PointDecorations;
+import Lists.TwoPointDecoration;
+import Lists.TwoPointDecorations;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -64,6 +68,7 @@ public class MainFrame extends javax.swing.JFrame {
     private Components components = new Components();
     private Wires wires = new Wires();
     private PointDecorations pointDecorationsList = new PointDecorations();
+    private TwoPointDecorations twoPointDecorationsList = new TwoPointDecorations();
     private ImageGenerator imagegenerator;
     private Point position;
     private Point connection1 = new Point();
@@ -88,6 +93,7 @@ public class MainFrame extends javax.swing.JFrame {
         drawPanel.setComponents(components);
         drawPanel.setWires(wires);
         drawPanel.setPointDecorationsList(pointDecorationsList);
+        drawPanel.setTwoPointDecorationsList(twoPointDecorationsList);
         componentsList.setListData(components.toArray());
         
         //Logo
@@ -100,6 +106,7 @@ public class MainFrame extends javax.swing.JFrame {
         drawPanel.setComponents(components);
         drawPanel.setWires(wires);
         drawPanel.setPointDecorationsList(pointDecorationsList);
+        drawPanel.setTwoPointDecorationsList(twoPointDecorationsList);
         componentsList.setListData(components.toArray());
         repaint();
     }
@@ -501,9 +508,14 @@ public class MainFrame extends javax.swing.JFrame {
             redoStack.clear();
             undoStack.clear();
             pointDecorationsList.clear();
+            twoPointDecorationsList.clear();
             ConnectionPoints.clear();
         }
         mousePressedCounter = 0;
+        
+        connection1 = null;
+        connection2 = null;
+            
         updateView();
     }//GEN-LAST:event_jDeleteAllMenuItemActionPerformed
 
@@ -517,13 +529,30 @@ public class MainFrame extends javax.swing.JFrame {
             pointDecorationsList.add(dot);
             undoStack.push(new StackItem(dot));
         }
-        if (jVoltageRadioButton.isSelected() && evt.getButton() == MouseEvent.BUTTON1) {
-            
+        if (jVoltageRadioButton.isSelected() && evt.getButton() == MouseEvent.BUTTON3 && mousePressedCounter == 0) {
+            mousePressedCounter++;
+            connection1 = new Point(X, Y);
+            connection2 = null;
+        }else if (jVoltageRadioButton.isSelected() && evt.getButton() == MouseEvent.BUTTON3 && mousePressedCounter == 1 && connection1 != null) {
+            mousePressedCounter = 0;
+            connection2 = new Point(X, Y);
+            TwoPointDecoration voltageArrow = new VoltageArrow(connection1, connection2);
+            twoPointDecorationsList.add(voltageArrow);
+            undoStack.push(new StackItem(voltageArrow));
         }
-        if (jCurrentRadioButton.isSelected() && evt.getButton() == MouseEvent.BUTTON1) {
-            
+        if (jCurrentRadioButton.isSelected() && evt.getButton() == MouseEvent.BUTTON3 && mousePressedCounter == 0) {
+            mousePressedCounter++;
+            connection1 = new Point(X, Y);
+            connection2 = null;
+        }else if (jCurrentRadioButton.isSelected() && evt.getButton() == MouseEvent.BUTTON3 && mousePressedCounter == 1 && connection1 != null) {
+            mousePressedCounter = 0;
+            connection2 = new Point(X, Y);
+            TwoPointDecoration currentArrow = new CurrentArrow(connection1, connection2);
+            twoPointDecorationsList.add(currentArrow);
+            undoStack.push(new StackItem(currentArrow));
         }
         if (jTextRadioButton.isSelected() && evt.getButton() == MouseEvent.BUTTON1 && !textTextField.equals("")) {
+            
             Point position = evt.getPoint();
             Text text = new Text(position, textTextField.getText(), (int) jtextSizeSpinner.getValue());
             pointDecorationsList.add(text);
@@ -617,14 +646,20 @@ public class MainFrame extends javax.swing.JFrame {
             components.add(component);
             undoStack.push(new StackItem(component)); 
                 
-        }else if(mousePressedCounter == 1 && evt.getButton() == MouseEvent.BUTTON3){  
+        }else if(jComponentRadioButton.isSelected() && mousePressedCounter == 1 && evt.getButton() == MouseEvent.BUTTON3 && connection1 != null && !ConnectionPoints.isEmpty()){
             connection2 = new Point(X, Y);
             Wire wire = new Wire(connection1, connection2);
             wires.add(wire);  
             undoStack.push(new StackItem(wire));
             mousePressedCounter = 0;
+            
+            connection1 = null;
+            connection2 = null;
          
-        }else if (mousePressedCounter == 0 && evt.getButton() == MouseEvent.BUTTON3) {
+        }else if (jComponentRadioButton.isSelected() && mousePressedCounter == 0 && evt.getButton() == MouseEvent.BUTTON3 && !ConnectionPoints.isEmpty()) {
+            connection1 = null;
+            connection2 = null;
+            
             mousePressedCounter++;
             connection1 = new Point(X, Y);
         }
@@ -691,6 +726,10 @@ public class MainFrame extends javax.swing.JFrame {
                 PointDecoration pointDecoration = item.getPointDecoration();
                 pointDecorationsList.add(pointDecoration);
                 undoStack.push(new StackItem(pointDecoration));
+            }else if (item.getIsTwoPointDecoration()) {
+                TwoPointDecoration twoPointDecoration = item.getTwoPointDecoration();
+                twoPointDecorationsList.add(twoPointDecoration);
+                undoStack.push(new StackItem(twoPointDecoration));
             }
         }
         updateView();
@@ -703,6 +742,7 @@ public class MainFrame extends javax.swing.JFrame {
             if (item.getIsComponent()) {
                 Component component = item.getComponent();
                 components.remove(component);
+                System.out.println("this is the component in the mainframe: " + component.toString());
                 redoStack.push(new StackItem(component));
             }else if (item.getIsWire()) {
                 Wire wire = item.getWire();
@@ -712,6 +752,10 @@ public class MainFrame extends javax.swing.JFrame {
                 PointDecoration pointDecoration = item.getPointDecoration();
                 pointDecorationsList.remove(pointDecoration);
                 redoStack.push(new StackItem(pointDecoration));
+            }else if (item.getIsTwoPointDecoration()) {
+                TwoPointDecoration twoPointDecoration = item.getTwoPointDecoration();
+                twoPointDecorationsList.remove(twoPointDecoration);
+                redoStack.push(new StackItem(twoPointDecoration));
             }
         }
         updateView();
