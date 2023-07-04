@@ -57,11 +57,14 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="jFileMenu">
           <Properties>
-            <Property name="text" type="java.lang.String" value="File"/>
+            <Property name="text" type="java.lang.String" value="Datei"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jExportMenuItem">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+E"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Export"/>
               </Properties>
               <Events>
@@ -70,7 +73,10 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jDeleteAllMenuItem">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Delete All"/>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+DELETE"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Alles l&#xf6;schen"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jDeleteAllMenuItemActionPerformed"/>
@@ -85,6 +91,9 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jRedoMenuItem">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+Y"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Redo"/>
               </Properties>
               <Events>
@@ -93,6 +102,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jUndoMenuItem">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+Z"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Undo"/>
               </Properties>
               <Events>
@@ -103,12 +115,15 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="jHelpMenu">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Help"/>
+            <Property name="text" type="java.lang.String" value="Hilfe"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jHowToUseMenuItem">
               <Properties>
-                <Property name="text" type="java.lang.String" value="How To Use"/>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+H"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Hilfe Men&#xfc;"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jHowToUseMenuItemActionPerformed"/>
@@ -147,14 +162,9 @@
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="deleteSelectedComponentButton" alignment="0" max="32767" attributes="0"/>
                   <Component id="jScrollPane3" alignment="0" max="32767" attributes="0"/>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jThemeComboBox" min="-2" max="-2" attributes="0"/>
-                  </Group>
                   <Component id="jScrollPane2" alignment="1" max="32767" attributes="0"/>
                   <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="highLightSelectedComponentButton" alignment="0" max="32767" attributes="0"/>
+                  <Component id="highLightSelectedComponentButton" alignment="0" pref="209" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -163,16 +173,26 @@
                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jDotConnectionRadioButton" min="-2" max="-2" attributes="0"/>
                           <Component id="jComponentRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jDotConnectionRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jCurrentRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jVoltageRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="jTextRadioButton" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="jtextSizeSpinner" min="-2" pref="77" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="textTextField" alignment="0" min="-2" pref="148" max="-2" attributes="0"/>
+                          </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="jTextRadioButton" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
-                              <Component id="textTextField" min="-2" pref="148" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jtextSizeSpinner" min="-2" pref="77" max="-2" attributes="0"/>
+                              <Component id="jVoltageRadioButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
+                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="jThemeComboBox" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -187,45 +207,42 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jComponentRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jThemeComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jVoltageRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jDotConnectionRadioButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jCurrentRadioButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-                      <Component id="jVoltageRadioButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jDotConnectionRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jTextRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="textTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jtextSizeSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                      <Component id="drawPanel" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jThemeComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCurrentRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="textTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="102" attributes="0">
                       <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jScrollPane3" min="-2" pref="292" max="-2" attributes="0"/>
+                      <Component id="jScrollPane3" min="-2" pref="343" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="highLightSelectedComponentButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="deleteSelectedComponentButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
+                  <Component id="drawPanel" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -320,12 +337,12 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Change Look and Feel:"/>
+        <Property name="text" type="java.lang.String" value="Look and Feel:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="deleteSelectedComponentButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Delete Selected Component"/>
+        <Property name="text" type="java.lang.String" value="Bauteil l&#xf6;schen"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteSelectedComponentButtonActionPerformed"/>
@@ -370,7 +387,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="highLightSelectedComponentButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Hightlight selected component"/>
+        <Property name="text" type="java.lang.String" value="Bauteil Highlight"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="highLightSelectedComponentButtonActionPerformed"/>
@@ -383,6 +400,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Text"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextRadioButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="textTextField">
       <Properties>
